@@ -11,8 +11,6 @@ Python library to control [VLC media player](https://www.videolan.org/vlc/index.
 
 ## Supported commands
 
-> **_NOTE:_**  Supported commands are based on vlc telnet's help command at 18/JAN/2021.
-
 ### VLM commands
 
 > **_NOTE:_**  There is no support for VLM commands... yet

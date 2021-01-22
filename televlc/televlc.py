@@ -15,6 +15,7 @@ class VLC():
 		self.PASSWORD = PASSWORD
 		self.HOST = HOST
 		self.PORT = PORT
+		self.server = None
 		self.tn = None
 
 
@@ -24,9 +25,14 @@ class VLC():
 			and telnet interface(for the app to control it) 
 		"""
 
-		subprocess.Popen(["vlc", "--extraintf", "telnet", "--telnet-password", self.PASSWORD, 
-			"--telnet-host", self.HOST, "--telnet-port", self.PORT], shell=False, stdout=subprocess.PIPE, 
-			stderr=subprocess.PIPE)
+		try:
+			self.server = subprocess.Popen(["vlc", "--extraintf", "telnet", "--telnet-password", self.PASSWORD, 
+				"--telnet-host", self.HOST, "--telnet-port", self.PORT], shell=False, stdout=subprocess.PIPE, 
+				stderr=subprocess.PIPE)
+		except:
+			return False
+
+		return True
 
 
 	def connect_to_telnet_interface(self):
@@ -54,10 +60,15 @@ class VLC():
 	def do(self, command):
 		"""
 			Executes the given command in the already connected telnet interface
-			Command has to be encoded to ascii
+		
+			The command recived must be writteng as a list, ej: [command, parameter1, parameter2]
 
 			* Should verify there is a connection to the telnet interface
 		"""
+
+		# Command validation
+		if type(command) != list:
+			raise Exception("[ERROR] The command provided is not a list\n", str(command)) 
 
 		# Wait until the console prompt appears(>)
 		message = ">"
