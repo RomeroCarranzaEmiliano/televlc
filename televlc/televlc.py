@@ -23,6 +23,8 @@ class VLC():
 		""" 
 			Start VLC graphic interface(normal vlc reproducer) 
 			and telnet interface(for the app to control it) 
+
+			* Some validation should be added
 		"""
 
 		try:
@@ -43,18 +45,24 @@ class VLC():
 			* Should verify if there is a started telnet interface
 		"""
 
-		# Telnet connection
-		self.tn = telnetlib.Telnet(self.HOST, self.PORT)
+		try:
+			# Telnet connection
+			self.tn = telnetlib.Telnet(self.HOST, self.PORT)
 
-		# Wait until the password is asked
-		message = "Password:"
-		message = message.encode("ascii")
-		self.tn.read_until(message)
+			# Wait until the password is asked
+			message = "Password:"
+			message = message.encode("ascii")
+			self.tn.read_until(message)
 
-		# Write message to telnet
-		message = f"{self.PASSWORD}\n"
-		message = message.encode("ascii")
-		self.tn.write(message)
+			# Write message to telnet
+			message = f"{self.PASSWORD}\n"
+			message = message.encode("ascii")
+			self.tn.write(message)
+		except Exception as e:
+			print(e)
+			return False
+
+		return True
 
 	
 	def do(self, command):

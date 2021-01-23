@@ -48,6 +48,7 @@ class TestVLC(unittest.TestCase):
 
 		vlc = televlc.VLC()
 		self.assertTrue(vlc.start_telnet_interface())
+		self.assertFalse(vlc.server == None)
 		# Terminate process
 		vlc.server.terminate()
 		self.assertEqual(vlc.server.poll(), None, "Sould be None")
@@ -58,7 +59,19 @@ class TestVLC(unittest.TestCase):
 		#self.assertEqual(vlc.server.poll(), None, "Should be None")
 
 
+	def test_connect_to_telnet_interface(self):
+		"""
+		"""
 
+		vlc = televlc.VLC()
+		vlc.start_telnet_interface()
+		#vlc.connect_to_telnet_interface()
+
+		self.assertTrue(vlc.connect_to_telnet_interface())
+		#self.assertFalse(self.tn == None)
+
+		vlc.server.terminate()
+		self.assertEqual(vlc.server.poll(), None, "Should be None")
 
 
 if __name__ == "__main__":
