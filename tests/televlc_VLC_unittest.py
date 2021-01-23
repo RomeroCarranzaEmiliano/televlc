@@ -6,6 +6,7 @@
 import unittest
 import sys
 import importlib
+from time import sleep
 
 sys.path.insert(1, '../televlc')
 import televlc
@@ -64,11 +65,12 @@ class TestVLC(unittest.TestCase):
 		"""
 
 		vlc = televlc.VLC()
-		vlc.start_telnet_interface()
-		#vlc.connect_to_telnet_interface()
+
+		self.assertTrue(vlc.start_telnet_interface())
 
 		self.assertTrue(vlc.connect_to_telnet_interface())
-		#self.assertFalse(self.tn == None)
+
+		self.assertFalse(vlc.tn == None)
 
 		vlc.server.terminate()
 		self.assertEqual(vlc.server.poll(), None, "Should be None")

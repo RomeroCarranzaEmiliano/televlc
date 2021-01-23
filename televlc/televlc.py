@@ -7,6 +7,7 @@
 # IMPORTS #########################################################################################
 import subprocess
 import telnetlib
+from time import sleep
 ###################################################################################################
 
 class VLC():
@@ -17,6 +18,8 @@ class VLC():
 		self.PORT = PORT
 		self.server = None
 		self.tn = None
+		self.time_rate = 0.01
+		self.intent_limit = 10
 
 
 	def start_telnet_interface(self):
@@ -40,29 +43,64 @@ class VLC():
 	def connect_to_telnet_interface(self):
 		""" 
 			Connects to the already started telnet interface.
-			Commands given to telnet have to be encoded to ascii
+			Commands given to telnet have to be encoded to ascii.
+			Due to the normal lag when starting up the interface, it is needed to do a re-try
+			when connecting to the interface in case both functions are called without waiting,
+			like:
+			`
+				vlc.start_telnet_interface()
+				vlc.connect_to_telnet_interface()
+			`
+			instead of:
+			`
+				vlc.start_telnet_interface()
+				time.sleep(1)
+				vlc.connect_to_telnet_interface()
+			`
+			To solve the case in which we want to connect to another telnet interface already
+			created outside the script or when the waiting time shouldn't be that big, the 
+			sleep before every intent goes from 0.1s and increases 50% for every intent.
 
 			* Should verify if there is a started telnet interface
 		"""
 
-		try:
-			# Telnet connection
-			self.tn = telnetlib.Telnet(self.HOST, self.PORT)
+		# Get the initial time rate
+		time_rate = self.time_rate
 
-			# Wait until the password is asked
-			message = "Password:"
-			message = message.encode("ascii")
-			self.tn.read_until(message)
+		# Try until the intent limit or success
+		for intent in range(0, self.intent_limit):
+			error = None
 
-			# Write message to telnet
-			message = f"{self.PASSWORD}\n"
-			message = message.encode("ascii")
-			self.tn.write(message)
-		except Exception as e:
-			print(e)
+			try:
+				# Telnet connection
+				self.tn = telnetlib.Telnet(self.HOST, self.PORT)
+
+				# Wait until the password is asked
+				message = "Password:"
+				message = message.encode("ascii")
+				self.tn.read_until(message)
+
+				# Write message to telnet
+				message = f"{self.PASSWORD}\n"
+				message = message.encode("ascii")
+				self.tn.write(message)
+			except Exception as e:
+				error = e
+
+			if error:
+				# Wait some time until next intent
+				sleep(time_rate)
+				# Grow the next waiting time
+				time_rate *= 1.5
+			else:
+				# Succesfull intent, then continue
+				break
+
+
+		if self.tn == None:
 			return False
-
-		return True
+		else:
+			return True
 
 	
 	def do(self, command):
@@ -76,7 +114,7 @@ class VLC():
 
 		# Command validation
 		if type(command) != list:
-			raise Exception("[ERROR] The command provided is not a list\n", str(command)) 
+			raise Exception("[ERROR] The command provided is not a list", str(command)) 
 
 		# Wait until the console prompt appears(>)
 		message = ">"
