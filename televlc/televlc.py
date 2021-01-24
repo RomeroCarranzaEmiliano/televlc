@@ -114,20 +114,35 @@ class VLC():
 
 		# Command validation
 		if type(command) != list:
-			raise Exception("[ERROR] The command provided is not a list", str(command)) 
-
-		# Wait until the console prompt appears(>)
-		message = ">"
-		message = message.encode("ascii")
-		self.tn.read_until(message)
-
-		# Write command to telnet
-		message = f"{command}\n"
-		message = message.encode("ascii")
-		self.tn.write(message)
+			return "[ERROR] The command provided is not a list" + str(command)
 
 
-	def disconnect_from_telnet(self):
+		# Create the command from the list
+		glued_command = ""
+		for i in range(len(command)):
+			if type(command[i]) == str:
+				glued_command += command[i]
+			else:
+				return False
+
+		try:
+			# Wait until the console prompt appears(>)
+			message = ">"
+			message = message.encode("ascii")
+			self.tn.read_until(message)
+
+			# Write command to telnet
+			message = f"{command}\n"
+			message = message.encode("ascii")
+			self.tn.write(message)
+		except:
+			return False
+
+		return True
+
+
+
+	def disconnect_from_telnet_interface(self):
 		"""
 			Disconnects from the telnet interface
 
@@ -135,15 +150,5 @@ class VLC():
 		"""	
 
 		# Sends an exit message to exit the telnet connection
-		self.do("exit")
+		return self.do("exit")
 
-
-	def exit(self):
-		"""
-			Stops the started interface
-
-			* Should verify that there is a started interface to stop
-		"""
-		
-		# Sends a shutdown message to stop the interface
-		self.do("shutdown")

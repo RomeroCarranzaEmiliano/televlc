@@ -76,5 +76,42 @@ class TestVLC(unittest.TestCase):
 		self.assertEqual(vlc.server.poll(), None, "Should be None")
 
 
+	def test_do(self):
+		"""
+		"""
+
+		vlc = televlc.VLC()
+		self.assertTrue(vlc.start_telnet_interface())
+		self.assertTrue(vlc.connect_to_telnet_interface())
+		self.assertFalse(vlc.tn  == None)
+
+		command = "an invalid command format, should be a list"
+		self.assertFalse(vlc.do(command) == True)
+
+		command = ["invalid", "command", 10]
+		self.assertFalse(vlc.do(command) == True)
+
+		command = ["volup", "50"]
+		self.assertTrue(vlc.do(command))
+
+		vlc.server.terminate()
+		self.assertEqual(vlc.server.poll(), None, "Should be None")
+
+
+	def test_disconnect_from_telnet_interface(self):
+		"""
+		"""
+
+		vlc = televlc.VLC()
+		self.assertTrue(vlc.start_telnet_interface())
+		self.assertTrue(vlc.connect_to_telnet_interface())
+		self.assertFalse(vlc.tn == None)
+
+		self.assertTrue(vlc.disconnect_from_telnet_interface())
+
+		vlc.server.terminate()
+		self.assertEqual(vlc.server.poll(), None, "Should be None")
+
+
 if __name__ == "__main__":
 	unittest.main()
