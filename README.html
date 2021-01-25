@@ -1056,9 +1056,56 @@ body .markdown-body
 .codehilite .il{color:#009999}
 .codehilite .gc{color:#999;background-color:#EAF2F5}
 </style><title>README</title></head><body><article class="markdown-body"><h1 id="televlc">televlc<a class="headerlink" href="#televlc" title="Permanent link"></a></h1>
+<div>
+<div class="codehilite"><pre>                                                      <span class="err">######</span>                 
+                                                <span class="err">##################</span>           
+             <span class="err">###</span>                                <span class="err">##</span>    <span class="err">#############</span>          
+            <span class="err">#####</span>                               <span class="err">###################</span>          
+           <span class="err">#######</span>                                       <span class="err">##########</span>          
+          <span class="o">*********</span>                    <span class="err">############################</span>  <span class="o">******</span> 
+         <span class="o">***********</span>                  <span class="err">#############################</span> <span class="o">*********</span>
+        <span class="err">##</span><span class="o">*********</span><span class="err">##</span>                <span class="err">##############################</span>  <span class="o">*********</span>
+       <span class="err">###############</span>   <span class="o">&lt;--------&gt;</span>  <span class="err">############</span>                 <span class="o">*************</span>
+      <span class="o">*</span><span class="err">##############</span><span class="o">*</span>                <span class="err">#########</span>   <span class="o">*****************************</span>
+     <span class="o">*******************</span>               <span class="err">#########</span> <span class="o">*****************************</span>
+     <span class="o">*******************</span>                <span class="err">########</span> <span class="o">***************************</span>  
+ <span class="err">####</span><span class="o">******************</span><span class="err">####</span>                     <span class="o">*********</span>                    
+<span class="err">########</span><span class="o">***********</span><span class="err">#########</span>                    <span class="o">*******************</span>          
+<span class="err">############################</span>                    <span class="o">*************</span>    <span class="o">**</span>          
+<span class="err">############################</span>                     <span class="o">*****************</span>
+                                                      <span class="o">*******</span>
+</pre></div>
+</div>
+
 <p>Python library to control <a href="https://www.videolan.org/vlc/index.es.html">VLC media player</a> via telnet protocol</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>pip install televlc
+</pre></div>
+
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>import televlc
+
+# Initialize the vlc object
+vlc = televlc.VLC()
+
+# Open a VLC instance and create the telnet interface
+vlc.start_telnet_interface()
+
+# Connect to the telnet interface
+vlc.connect_to_telnet_interface()
+
+# Run a command (volume up)
+vlc.do([&quot;volup&quot;, &quot;50&quot;])
+
+# Disconnect from telnet interfac
+vlc.disconnect_from_telnet_interface()
+# or
+vlc.do([&quot;exit&quot;])
+# or end VLC instance and telnet interface
+vlc.do([&quot;shutdown&quot;])
+</pre></div>
+
+
 <h2 id="supported-commands">Supported commands<a class="headerlink" href="#supported-commands" title="Permanent link"></a></h2>
 <h3 id="vlm-commands">VLM commands<a class="headerlink" href="#vlm-commands" title="Permanent link"></a></h3>
 <blockquote>

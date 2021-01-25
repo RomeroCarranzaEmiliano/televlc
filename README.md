@@ -1,13 +1,60 @@
 # televlc
 
+<div>
+```java
+                                                      ######                 
+                                                ##################           
+             ###                                ##    #############          
+            #####                               ###################          
+           #######                                       ##########          
+          *********                    ############################  ****** 
+         ***********                  ############################# *********
+        ##*********##                ##############################  *********
+       ###############   <-------->  ############                 *************
+      *##############*                #########   *****************************
+     *******************               ######### *****************************
+     *******************                ######## ***************************  
+ ####******************####                     *********                    
+########***********#########                    *******************          
+############################                    *************    **          
+############################                     *****************
+                                                      *******
+
+
+```
+</div>
+
 Python library to control [VLC media player](https://www.videolan.org/vlc/index.es.html) via telnet protocol
 
 
 ## Installation
 
+```
+pip install televlc
+```
 
 ## Usage
 
+    import televlc
+
+    # Initialize the vlc object
+    vlc = televlc.VLC()
+
+    # Open a VLC instance and create the telnet interface
+    vlc.start_telnet_interface()
+
+    # Connect to the telnet interface
+    vlc.connect_to_telnet_interface()
+
+    # Run a command (volume up)
+    vlc.do(["volup", "50"])
+
+    # Disconnect from telnet interfac
+    vlc.disconnect_from_telnet_interface()
+    # or
+    vlc.do(["exit"])
+    # or end VLC instance and telnet interface
+    vlc.do(["shutdown"])
 
 ## Supported commands
 
