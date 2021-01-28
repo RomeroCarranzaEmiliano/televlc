@@ -1,6 +1,6 @@
 # televlc
 
-<div>
+
 ```java
                                                       ######                 
                                                 ##################           
@@ -19,10 +19,7 @@
 ############################                    *************    **          
 ############################                     *****************
                                                       *******
-
-
 ```
-</div>
 
 Python library to control [VLC media player](https://www.videolan.org/vlc/index.es.html) via telnet protocol
 
