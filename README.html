@@ -1064,7 +1064,7 @@ body .markdown-body
           <span class="o">*********</span>                    <span class="err">############################</span>  <span class="o">******</span> 
          <span class="o">***********</span>                  <span class="err">#############################</span> <span class="o">*********</span>
         <span class="err">##</span><span class="o">*********</span><span class="err">##</span>                <span class="err">##############################</span>  <span class="o">*********</span>
-       <span class="err">###############</span>   <span class="o">&lt;--------&gt;</span>  <span class="err">############</span>                 <span class="o">*************</span>
+       <span class="err">###############</span>   <span class="o">&lt;--------</span><span class="p">&gt;</span>  <span class="err">############</span>                 <span class="o">*************</span>
       <span class="o">*</span><span class="err">##############</span><span class="o">*</span>                <span class="err">#########</span>   <span class="o">*****************************</span>
      <span class="o">*******************</span>               <span class="err">#########</span> <span class="o">*****************************</span>
      <span class="o">*******************</span>                <span class="err">########</span> <span class="o">***************************</span>  
@@ -1077,352 +1077,309 @@ body .markdown-body
 
 <p>Python library to control <a href="https://www.videolan.org/vlc/index.es.html">VLC media player</a> via telnet protocol</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
-<div class="codehilite"><pre>pip install televlc
+<div class="codehilite"><pre>    ~<span class="nv">$ </span>pip install televlc
 </pre></div>
 
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
-<div class="codehilite"><pre>import televlc
+<h3 id="creating-a-vlc-instance-and-interface-then-connecting">Creating a vlc instance and interface, then connecting<a class="headerlink" href="#creating-a-vlc-instance-and-interface-then-connecting" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    <span class="kn">import</span> <span class="nn">televlc</span>
 
-# Initialize the vlc object
-vlc = televlc.VLC()
+    <span class="c1"># Initialize the vlc object</span>
+    <span class="n">vlc</span> <span class="o">=</span> <span class="n">televlc</span><span class="o">.</span><span class="n">VLC</span><span class="p">()</span>
 
-# Open a VLC instance and create the telnet interface
-vlc.start_telnet_interface()
+    <span class="c1"># Open a VLC instance and create the telnet interface</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">start_telnet_interface</span><span class="p">()</span>
 
-# Connect to the telnet interface
-vlc.connect_to_telnet_interface()
+    <span class="c1"># Connect to the telnet interface</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">connect_to_telnet_interface</span><span class="p">()</span>
 
-# Run a command (volume up)
-vlc.do([&quot;volup&quot;, &quot;50&quot;])
+    <span class="c1"># Run a command (volume up)</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">do</span><span class="p">([</span><span class="s">&quot;volup&quot;</span><span class="p">,</span> <span class="s">&quot;50&quot;</span><span class="p">])</span>
 
-# Disconnect from telnet interfac
-vlc.disconnect_from_telnet_interface()
-# or
-vlc.do([&quot;exit&quot;])
-# or end VLC instance and telnet interface
-vlc.do([&quot;shutdown&quot;])
+    <span class="c1"># Disconnect from telnet interfac</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">disconnect_from_telnet_interface</span><span class="p">()</span>
+    <span class="c1"># or</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">do</span><span class="p">([</span><span class="s">&quot;exit&quot;</span><span class="p">])</span>
+    <span class="c1"># or end VLC instance and telnet interface</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">do</span><span class="p">([</span><span class="s">&quot;shutdown&quot;</span><span class="p">])</span>
 </pre></div>
 
+<h3 id="connecting-to-an-existing-vlc-instance-and-interface">Connecting to an existing vlc instance and interface<a class="headerlink" href="#connecting-to-an-existing-vlc-instance-and-interface" title="Permanent link"></a></h3>
+<p>create the vlc instance and interface in the terminal</p>
+<div class="codehilite"><pre>    ~<span class="nv">$ </span>vlc --extraintf --telnet --telnet-password myPassword --telnet-host myHost --telnet-port myPort
+</pre></div>
 
-<h2 id="supported-commands">Supported commands<a class="headerlink" href="#supported-commands" title="Permanent link"></a></h2>
-<h3 id="vlm-commands">VLM commands<a class="headerlink" href="#vlm-commands" title="Permanent link"></a></h3>
-<blockquote>
-<p><strong><em>NOTE:</em></strong>  There is no support for VLM commands&hellip; yet</p>
-</blockquote>
-<h3 id="cli-commands">CLI commands<a class="headerlink" href="#cli-commands" title="Permanent link"></a></h3>
+<p>connect via python</p>
+<div class="codehilite"><pre>    <span class="kn">import</span> <span class="nn">televlc</span>
+
+    <span class="c1"># Set the interface data</span>
+    <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">myPassword</span>
+    <span class="n">HOST</span> <span class="o">=</span> <span class="n">myHost</span>
+    <span class="n">PORT</span> <span class="o">=</span> <span class="n">myPort</span>
+
+    <span class="c1"># Initialize the vlc object</span>
+    <span class="n">vlc</span> <span class="o">=</span> <span class="n">televlc</span><span class="o">.</span><span class="n">VLC</span><span class="p">(</span><span class="n">PASSWORD</span><span class="p">,</span> <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+
+    <span class="c1"># Run a command</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;volup&quot;</span><span class="p">,</span> <span class="s">&quot;50&quot;</span><span class="p">]</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+    <span class="c1"># Quit</span>
+    <span class="n">vlc</span><span class="o">.</span><span class="n">disconnect_from_telnet_interface</span><span class="p">()</span>
+</pre></div>
+
+<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
 <th>command</th>
 <th>description</th>
-<th>support</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>add XYZ</td>
 <td>add XYZ to playlist</td>
-<td></td>
 </tr>
 <tr>
 <td>enqueue XYZ</td>
 <td>queue XYZ to playlist</td>
-<td></td>
 </tr>
 <tr>
 <td>playlist</td>
 <td>show items currently in playlist</td>
-<td></td>
 </tr>
 <tr>
 <td>search [string]</td>
 <td>search for items in playlist (or reset search)</td>
-<td></td>
 </tr>
 <tr>
 <td>delete [X]</td>
 <td>delete item X in playlist</td>
-<td></td>
 </tr>
 <tr>
 <td>move [X][Y]</td>
 <td>move item X in playlist after Y</td>
-<td></td>
 </tr>
 <tr>
 <td>sort key</td>
 <td>sort the playlist</td>
-<td></td>
 </tr>
 <tr>
 <td>sd [sd]</td>
 <td>show services discovery or toggle</td>
-<td></td>
 </tr>
 <tr>
 <td>play</td>
 <td>play stream</td>
-<td></td>
 </tr>
 <tr>
 <td>stop</td>
 <td>stop stream</td>
-<td></td>
 </tr>
 <tr>
 <td>next</td>
 <td>next playlist item</td>
-<td></td>
 </tr>
 <tr>
 <td>prev</td>
 <td>previous playlist item</td>
-<td></td>
 </tr>
 <tr>
 <td>goto, gotoitem</td>
 <td>goto item at index</td>
-<td></td>
 </tr>
 <tr>
 <td>repeat [on off]</td>
 <td>toggle playlist repeat</td>
-<td></td>
 </tr>
 <tr>
 <td>loop [on off]</td>
 <td>toggle playlist loop</td>
-<td></td>
 </tr>
 <tr>
 <td>random [on off]</td>
 <td>toggle playlist random</td>
-<td></td>
 </tr>
 <tr>
 <td>clear</td>
 <td>clear the playlist</td>
-<td></td>
 </tr>
 <tr>
 <td>status</td>
 <td>current playlist status</td>
-<td></td>
 </tr>
 <tr>
 <td>title [X]</td>
 <td>set/get title in current item</td>
-<td></td>
 </tr>
 <tr>
 <td>title_n</td>
 <td>next title in current item</td>
-<td></td>
 </tr>
 <tr>
 <td>title_p</td>
 <td>previous title in current item</td>
-<td></td>
 </tr>
 <tr>
 <td>chapter [X]</td>
 <td>set/get chapter in current item</td>
-<td></td>
 </tr>
 <tr>
 <td>chapter_n</td>
 <td>next chapter in current item</td>
-<td></td>
 </tr>
 <tr>
 <td>chapter_p</td>
 <td>previous chapter in current item</td>
-<td></td>
 </tr>
 <tr>
 <td>seek X</td>
 <td>seek in seconds, for instance `seek 12&rsquo;</td>
-<td></td>
 </tr>
 <tr>
 <td>pause</td>
 <td>toggle pause</td>
-<td></td>
 </tr>
 <tr>
 <td>fastforward</td>
 <td>set to maximum rate</td>
-<td></td>
 </tr>
 <tr>
 <td>rewind</td>
 <td>set to minimum rate</td>
-<td></td>
 </tr>
 <tr>
 <td>faster</td>
 <td>faster playing of stream</td>
-<td></td>
 </tr>
 <tr>
 <td>slower</td>
 <td>slower playing of stream</td>
-<td></td>
 </tr>
 <tr>
 <td>normal</td>
 <td>normal playing of stream</td>
-<td></td>
 </tr>
 <tr>
 <td>rate [playback_rate]</td>
 <td>set playback rate to value</td>
-<td></td>
 </tr>
 <tr>
 <td>frame</td>
 <td>play frame by frame</td>
-<td></td>
 </tr>
 <tr>
 <td>fullscreen, f, F [on off]</td>
 <td>toggle fullscreen</td>
-<td></td>
 </tr>
 <tr>
 <td>info [X]</td>
 <td>information about the current stream (or specified id)</td>
-<td></td>
 </tr>
 <tr>
 <td>stats</td>
 <td>show statistical information</td>
-<td></td>
 </tr>
 <tr>
 <td>get_time</td>
 <td>seconds elapsed since stream&rsquo;s beginning</td>
-<td></td>
 </tr>
 <tr>
 <td>is_playing</td>
 <td>1 if a stream plays, 0 otherwise</td>
-<td></td>
 </tr>
 <tr>
 <td>get_title</td>
 <td>the title of the current stream</td>
-<td></td>
 </tr>
 <tr>
 <td>get_length</td>
 <td>the length of the current stream</td>
-<td></td>
 </tr>
 <tr>
 <td>volume [X]</td>
 <td>set/get audio volume</td>
-<td></td>
 </tr>
 <tr>
 <td>volup [X]</td>
 <td>raise audio volume X steps</td>
-<td></td>
 </tr>
 <tr>
 <td>voldown [X]</td>
 <td>lower audio volume X steps</td>
-<td></td>
 </tr>
 <tr>
 <td>achan [X]</td>
 <td>set/get stereo audio output mode</td>
-<td></td>
 </tr>
 <tr>
 <td>atrack [X]</td>
 <td>set/get audio track</td>
-<td></td>
 </tr>
 <tr>
 <td>vtrack [X]</td>
 <td>set/get video track</td>
-<td></td>
 </tr>
 <tr>
 <td>vratio [X]</td>
 <td>set/get video aspect ratio</td>
-<td></td>
 </tr>
 <tr>
 <td>vcrop, crop [X]</td>
 <td>set/get video crop</td>
-<td></td>
 </tr>
 <tr>
 <td>vzoom, zoom [X]</td>
 <td>set/get video zoom</td>
-<td></td>
 </tr>
 <tr>
 <td>vdeinterlace [X]</td>
 <td>set/get video deinterlace</td>
-<td></td>
 </tr>
 <tr>
 <td>vdeinterlace_mode [X]</td>
 <td>set/get video deinterlace mode</td>
-<td></td>
 </tr>
 <tr>
 <td>snapshot</td>
 <td>take video snapshot</td>
-<td></td>
 </tr>
 <tr>
 <td>strack [X]</td>
 <td>set/get subtitle track</td>
-<td></td>
 </tr>
 <tr>
 <td>vlm</td>
 <td>load the VLM</td>
-<td></td>
 </tr>
 <tr>
 <td>description</td>
 <td>describe this module</td>
-<td></td>
 </tr>
 <tr>
 <td>help, ? [pattern]</td>
 <td>a help message</td>
-<td></td>
 </tr>
 <tr>
 <td>longhelp [pattern]</td>
 <td>a longer help message</td>
-<td></td>
 </tr>
 <tr>
 <td>lock</td>
 <td>lock the telnet prompt</td>
-<td></td>
 </tr>
 <tr>
 <td>logout</td>
 <td>exit (if in a socket connection)</td>
-<td></td>
 </tr>
 <tr>
 <td>quit</td>
 <td>quit VLC (or logout if in a socket connection)</td>
-<td></td>
 </tr>
 <tr>
 <td>shutdown</td>
 <td>shutdown VLC</td>
-<td></td>
 </tr>
 </tbody>
 </table></article></body></html>

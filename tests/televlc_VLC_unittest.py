@@ -113,5 +113,22 @@ class TestVLC(unittest.TestCase):
 		self.assertEqual(vlc.server.poll(), None, "Should be None")
 
 
+	def test_commands(self):
+		"""
+		"""
+
+		vlc = televlc.VLC()
+		self.assertTrue(vlc.start_telnet_interface())
+		self.assertTrue(vlc.connect_to_telnet_interface())
+		self.assertFalse(vlc.tn  == None)
+
+
+		command = ["add", "xyz"]
+		self.assertTrue(vlc.do(command))
+
+		vlc.server.terminate()
+		self.assertEqual(vlc.server.poll(), None, "Should be None")
+
+
 if __name__ == "__main__":
 	unittest.main()
