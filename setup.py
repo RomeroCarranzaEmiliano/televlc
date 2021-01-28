@@ -12,7 +12,7 @@ with open('HISTORY.md') as history_file:
 
 setup_args = dict(
 	name='televlc',
-	version='0.1',
+	version='0.2',
 	description='Control VLC media player via telnet from Python',
 	long_description_content_type='text/markdown',
 	long_description=README + '\n\n' + HISTORY,
